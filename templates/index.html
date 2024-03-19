@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Recipe App</title>
+    <style>
+        body {
+            text-align: center;
+            margin: 40px;
+            font-family: Arial, Helvetica, sans-serif;
+            background-image: url(https://media.istockphoto.com/id/1312307362/photo/culinary-border-of-rosemary-salt-pepper-and-oil.webp?b=1&s=170667a&w=0&k=20&c=RiSSyVsqwgaR9ddqdQZcm8FCdr4Mfrx0QppWdkdGeRg=);
+        }
+        h1,h2,h3 {
+            margin-bottom: 20px;
+            color:white;
+        }
+
+        a{
+            -webkit-text-fill-color: aqua;
+        }
+
+
+        .js{
+            
+            width: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 30px;
+        }
+
+        .hs{
+            
+            width: 300px;
+            display: flex;
+            height: 30px;
+            
+        }
+        
+        #search_box{
+            width: 230px;
+            border: none;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+            outline: none;
+            
+            }
+
+        #search_box,placeholder{
+            padding-left: 10px;
+
+            }
+
+
+
+        #search_btn{
+            width: 80px;
+            border: none;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+            outline: none;
+
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            display: inline-block;
+            text-align: center;
+            margin: 10px;
+            width: 200px;
+        }
+        .recipe-title {
+            font-size: 16px;
+            line-height: 1.2;
+            max-height: 3.6em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+        }
+        img {
+            display: block;
+            margin: 0 auto;
+            max-width: 200px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            color: blue;
+            text-decoration: underline;
+        }
+        .home-button {
+            display: inline-block;
+            margin-top: 10px;
+            margin-left: 10px;
+            color: blue;
+            text-decoration: underline;
+        }
+        .recipe-details {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 2px solid #ccc;
+            padding: 20px;
+        }
+        .section-title {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        .ingredient-list, .instrction-list {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Recipe App</h1>
+    <form method="POST" action="/">
+
+        <div class = "js">
+            <div class = "hs">
+                <input id = "search_box" type="text" name="search_query" placeholder="Search for recipes">
+                <input id = "search_btn" type="submit" value="Search">
+            </div>
+        </div>
+        
+        <!-- <a href="/home" class="home-button">Home</a> -->
+    </form>
+
+    <!-- Check of recipes are available-->
+    {% if recipes%}
+    <h2>Results for "{{ search_query }}"</h2>
+    <ul>
+        {% for recipe in recipes %}
+        <li>
+            <h3 class="recipe-title">{{ recipe.title }}</h3>
+            {% if recipe.image %}
+            <img src="{{ recipe.image }}" alt="{{ recipe.title }}">
+            {% endif %}
+            <a href="{{ url_for('view_recipe', recipe_id=recipe.id, search_query=search_query) }}">View</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <!-- If no recipes are found -->
+    {% else %}
+    <p>No recipes found.</p>
+    {% endif %}
+</body>
+</html>
